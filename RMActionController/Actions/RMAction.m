@@ -165,7 +165,9 @@
     if(self.style == RMActionStyleDestructive) {
         [actionButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     } else {
-        [actionButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
+        if (self.titleColor != NULL) {
+            [actionButton setTitleColor:self.titleColor forState:UIControlStateNormal];
+        }
     }
     
     self.button = actionButton;

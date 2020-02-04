@@ -98,6 +98,9 @@ typedef NS_ENUM(NSInteger, RMActionStyle) {
  */
 @property (nonatomic, assign) BOOL dismissesActionController;
 
+
+@property (nonatomic, assign) UIColor * _Nullable titleColor;
+
 /**
  *  Gives you access to the actual view of the RMAction.
  */

@@ -38,6 +38,7 @@ class ViewController: UITableViewController {
         actionController.title = "Test"
         actionController.message = "This is a test message.\nPlease choose a date and press 'Select' or 'Cancel'."
         
+        selectAction.titleColor = .orange
         actionController.addAction(selectAction)
         actionController.addAction(cancelAction)
         

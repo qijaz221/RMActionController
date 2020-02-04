@@ -293,7 +293,15 @@
     if(!self.disableBlurEffects) {
         self.topContainer.backgroundColor = [UIColor clearColor];
     } else {
-        self.topContainer.backgroundColor = [UIColor whiteColor];
+        if (self.style == RMActionControllerStyleWhite) {
+            self.topContainer.backgroundColor = [UIColor whiteColor];
+        } else if (self.style == RMActionControllerStyleBlack) {
+            if (self.backgroundColor != NULL) {
+                self.topContainer.backgroundColor = self.backgroundColor;
+            } else {
+                self.topContainer.backgroundColor = [UIColor darkGrayColor];
+            }
+        }
     }
 
     //Debugging Accessibility Labels
@@ -336,7 +344,15 @@
     if(!self.disableBlurEffects) {
         self.bottomContainer.backgroundColor = [UIColor clearColor];
     } else {
-        self.bottomContainer.backgroundColor = [UIColor whiteColor];
+        if (self.style == RMActionControllerStyleWhite) {
+            self.bottomContainer.backgroundColor = [UIColor whiteColor];
+        } else if (self.style == RMActionControllerStyleBlack) {
+            if (self.backgroundColor != NULL) {
+                self.bottomContainer.backgroundColor = self.backgroundColor;
+            } else {
+                self.bottomContainer.backgroundColor = [UIColor darkGrayColor];
+            }
+        }
     }
 
     //Debugging Accessibility Labels

@@ -25,6 +25,7 @@ class ViewController: UITableViewController {
         if self.blackSwitch.isOn {
             style = RMActionControllerStyle.black
         }
+        style = RMActionControllerStyle.black
         
         let selectAction = RMAction<UIView>(title: "Select", style: RMActionStyle.done) { controller in
             print("Custom action controller finished successfully")
@@ -125,6 +126,7 @@ class ViewController: UITableViewController {
         actionController.disableMotionEffects = !self.motionSwitch.isOn
         actionController.disableBlurEffects = !self.blurSwitch.isOn
         actionController.disableBlurEffectsForActions = !self.blurActionSwitch.isOn
+        actionController.backgroundColor = .red
         
         //On the iPad we want to show the date selection view controller within a popover. Fortunately, we can use iOS 8 API for this! :)
         //(Of course only if we are running on iOS 8 or later)

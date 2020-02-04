@@ -364,6 +364,9 @@
 #pragma mark - Constraint Setup
 - (void)setupConstraints {
     NSDictionary *metrics = @{@"seperatorHeight": @(1.f / [[UIScreen mainScreen] scale]), @"Margin": @([self marginForCurrentStyle])};
+    
+    
+    NSDictionary *bottomMetrics = @{@"seperatorHeight": @(0.f / [[UIScreen mainScreen] scale]), @"Margin": @([self marginForCurrentStyle])};
 
     UIView *topContainer = self.topContainer;
     UIView *bottomContainer = self.bottomContainer;
@@ -374,7 +377,7 @@
 
     [self setupContainerConstraintWithBindings:bindingsDict metrics:metrics];
     [self setupTopContainerContentConstraintsWithMetrics:metrics];
-    [self setupBottomContainerContentConstraintsWithMetrics:metrics];
+    [self setupBottomContainerContentConstraintsWithMetrics:bottomMetrics];
 }
 
 - (void)setupContainerConstraintWithBindings:(NSDictionary *)bindingsDict metrics:(NSDictionary *)metrics {
@@ -415,6 +418,8 @@
         [blockself addSubview:seperator toContainer:blockself.topContainer];
 
         if(!currentTopView) {
+            NSLog(@"!currentTopView index for action=%i, name=%@, totalActions=%i", index, action.title, self.doneActions.count);
+            //NSLog(@"index for action=%i, name=%@", index, action.title);
             NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator};
 
             [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
@@ -423,11 +428,18 @@
 
             [blockself.topContainer addConstraint:[NSLayoutConstraint constraintWithItem:action.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:[blockself topContainerBottomItem] attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
         } else {
-            NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator, @"currentTopView": currentTopView};
-
-            [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
-            [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
-            [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(seperatorHeight)]-(0)-[actionView]-(0)-[currentTopView]" options:0 metrics:metrics views:bindings]];
+            if (index == self.doneActions.count - 1) {
+                //Don't want separator at the very top.
+                NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator, @"currentTopView": currentTopView};
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(0)]-(0)-[actionView]-(0)-[currentTopView]" options:0 metrics:metrics views:bindings]];
+            } else {
+                NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator, @"currentTopView": currentTopView};
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(seperatorHeight)]-(0)-[actionView]-(0)-[currentTopView]" options:0 metrics:metrics views:bindings]];
+            }
         }
 
         currentTopView = seperator;

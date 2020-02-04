@@ -25,9 +25,16 @@ class ViewController: UITableViewController {
         if self.blackSwitch.isOn {
             style = RMActionControllerStyle.black
         }
-        style = RMActionControllerStyle.black
         
         let selectAction = RMAction<UIView>(title: "Select", style: RMActionStyle.done) { controller in
+            print("Custom action controller finished successfully")
+        }
+        
+        let selectAction1 = RMAction<UIView>(title: "Select1", style: RMActionStyle.done) { controller in
+            print("Custom action controller finished successfully")
+        }
+        
+        let selectAction2 = RMAction<UIView>(title: "Select2", style: RMActionStyle.done) { controller in
             print("Custom action controller finished successfully")
         }
         
@@ -35,12 +42,11 @@ class ViewController: UITableViewController {
             print("custom action controller was canceled")
         }
         
-        let actionController = CustomViewActionController(style: style)
-        actionController.title = "Test"
-        actionController.message = "This is a test message.\nPlease choose a date and press 'Select' or 'Cancel'."
-        
-        selectAction.titleColor = .orange
+        let actionController = RMActionController(style: style)
+        actionController.contentView = UIView(frame: .zero)
         actionController.addAction(selectAction)
+        actionController.addAction(selectAction1)
+        actionController.addAction(selectAction2)
         actionController.addAction(cancelAction)
         
         present(actionController: actionController);
@@ -62,9 +68,7 @@ class ViewController: UITableViewController {
             print("custom action controller was canceled")
         }
         
-        let actionController = CustomViewActionController(style: style)
-        actionController.title = "Export"
-        actionController.message = "Please choose an export format or tap 'Cancel'."
+        let actionController = RMActionController(style: style)
         
         actionController.addAction(selectAction)
         actionController.addAction(cancelAction)
@@ -126,7 +130,6 @@ class ViewController: UITableViewController {
         actionController.disableMotionEffects = !self.motionSwitch.isOn
         actionController.disableBlurEffects = !self.blurSwitch.isOn
         actionController.disableBlurEffectsForActions = !self.blurActionSwitch.isOn
-        actionController.backgroundColor = .red
         
         //On the iPad we want to show the date selection view controller within a popover. Fortunately, we can use iOS 8 API for this! :)
         //(Of course only if we are running on iOS 8 or later)

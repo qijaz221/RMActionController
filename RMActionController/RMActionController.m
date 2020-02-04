@@ -722,7 +722,7 @@
     if(!_backgroundView) {
         if(self.disableBlurEffectsForBackgroundView) {
             self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-            _backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+            _backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
         } else {
             UIVisualEffect *effect = [UIBlurEffect effectWithStyle:[self backgroundBlurEffectStyleForCurrentStyle]];
             self.backgroundView = [[UIVisualEffectView alloc] initWithEffect:effect];

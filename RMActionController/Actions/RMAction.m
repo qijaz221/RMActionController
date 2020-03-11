@@ -145,11 +145,11 @@
             case RMActionControllerStyleSheetWhite:
             case RMActionControllerStyleAdaptive:
             case RMActionControllerStyleSheetAdaptive:
-                [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.2 alpha:1]] forState:UIControlStateHighlighted];
+                [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.5 alpha:0.5]] forState:UIControlStateHighlighted];
                 break;
             case RMActionControllerStyleBlack:
             case RMActionControllerStyleSheetBlack:
-                [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.8 alpha:1]] forState:UIControlStateHighlighted];
+                [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.5 alpha:1]] forState:UIControlStateHighlighted];
                 break;
         }
     }

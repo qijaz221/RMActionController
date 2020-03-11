@@ -418,8 +418,6 @@
         [blockself addSubview:seperator toContainer:blockself.topContainer];
 
         if(!currentTopView) {
-            NSLog(@"!currentTopView index for action=%i, name=%@, totalActions=%i", index, action.title, self.doneActions.count);
-            //NSLog(@"index for action=%i, name=%@", index, action.title);
             NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator};
 
             [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];

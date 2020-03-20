@@ -25,10 +25,18 @@
 @implementation RMAction
 
 #pragma mark - Class
-+ (instancetype)actionWithTitle:(NSString *)title style:(RMActionStyle)style andHandler:(void (^)(RMActionController<UIView *> * _Nonnull))handler {
++ (instancetype)actionWithTitle:(NSString *)title  style:(RMActionStyle)style andHandler:(void (^)(RMActionController<UIView *> * _Nonnull))handler {
     RMAction *action = [[self class] actionWithStyle:style andHandler:handler];
     action.title = title;
     
+    return action;
+}
+
+
++ (instancetype)actionWithTitle:(NSString *)title highlightColor:(nullable UIColor *)highlightColor style:(RMActionStyle)style andHandler:(void (^)(RMActionController<UIView *> * _Nonnull))handler {
+    RMAction *action = [[self class] actionWithStyle:style andHandler:handler];
+    action.title = title;
+    action.highlightColor = highlightColor;
     return action;
 }
 
@@ -130,12 +138,13 @@
 - (UIView *)loadView {
     UIButtonType buttonType = UIButtonTypeCustom;
     if(self.controller.disableBlurEffectsForActions) {
-        buttonType = UIButtonTypeSystem;
+        buttonType = UIButtonTypeCustom;
     }
     
     UIButton *actionButton = [UIButton buttonWithType:buttonType];
     [actionButton addTarget:self action:@selector(actionTapped:) forControlEvents:UIControlEventTouchUpInside];
     [actionButton setBackgroundImage:[self imageWithColor:[[UIColor whiteColor] colorWithAlphaComponent:0]] forState:UIControlStateNormal];
+    [actionButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
     
     if(!self.controller.disableBlurEffectsForActions) {
         [actionButton setBackgroundImage:[self imageWithColor:[[UIColor whiteColor] colorWithAlphaComponent:0.3]] forState:UIControlStateHighlighted];
@@ -145,11 +154,19 @@
             case RMActionControllerStyleSheetWhite:
             case RMActionControllerStyleAdaptive:
             case RMActionControllerStyleSheetAdaptive:
-                [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.5 alpha:0.5]] forState:UIControlStateHighlighted];
+                if (self.highlightColor != NULL) {
+                    [actionButton setBackgroundImage:[self imageWithColor:self.highlightColor] forState:UIControlStateHighlighted];
+                } else {
+                    [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.5 alpha:0.5]] forState:UIControlStateHighlighted];
+                }
                 break;
             case RMActionControllerStyleBlack:
             case RMActionControllerStyleSheetBlack:
-                [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.5 alpha:1]] forState:UIControlStateHighlighted];
+                if (self.highlightColor != NULL) {
+                    [actionButton setBackgroundImage:[self imageWithColor:self.highlightColor] forState:UIControlStateHighlighted];
+                } else {
+                    [actionButton setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:0.5 alpha:1]] forState:UIControlStateHighlighted];
+                }
                 break;
         }
     }

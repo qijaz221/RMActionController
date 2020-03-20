@@ -47,6 +47,9 @@ typedef NS_ENUM(NSInteger, RMActionStyle) {
  */
 + (nonnull instancetype)actionWithTitle:(nonnull NSString *)title style:(RMActionStyle)style andHandler:(nullable void (^)(RMActionController<T> * __nonnull controller))handler;
 
+
++ (nonnull instancetype)actionWithTitle:(nonnull NSString *)title highlightColor:(nullable UIColor *)highlightColor style:(RMActionStyle)style andHandler:(nullable void (^)(RMActionController<T> * __nonnull controller))handler;
+
 /**
  *  Returns a new instance of RMAction with the given properties set.
  *
@@ -100,6 +103,9 @@ typedef NS_ENUM(NSInteger, RMActionStyle) {
 
 
 @property (nonatomic, assign) UIColor * _Nullable titleColor;
+
+
+@property (nonatomic, assign) UIColor * _Nullable highlightColor;
 
 /**
  *  Gives you access to the actual view of the RMAction.

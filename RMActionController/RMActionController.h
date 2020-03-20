@@ -131,6 +131,8 @@ typedef NS_ENUM(NSInteger, RMActionControllerStyle) {
 
 @property (nullable, nonatomic, copy) UIColor *backgroundColor;
 
+
+
 /**
  *  When YES taps on the background view are ignored. Default value is NO.
  */

@@ -26,7 +26,7 @@ class ViewController: UITableViewController {
             style = RMActionControllerStyle.black
         }
         
-        let selectAction = RMAction<UIView>(title: "Select", style: RMActionStyle.done) { controller in
+        let selectAction = RMAction<UIView>(title: "Select", highlight:UIColor.red, style: RMActionStyle.done) { controller in
             print("Custom action controller finished successfully")
         }
         
@@ -45,8 +45,8 @@ class ViewController: UITableViewController {
         let actionController = RMActionController(style: style)
         actionController.contentView = UIView(frame: .zero)
         actionController.addAction(selectAction)
-        actionController.addAction(selectAction1)
-        actionController.addAction(selectAction2)
+        //actionController.addAction(selectAction1)
+        //actionController.addAction(selectAction2)
         actionController.addAction(cancelAction)
         
         present(actionController: actionController);

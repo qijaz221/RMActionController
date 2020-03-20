@@ -48,7 +48,7 @@
         style = RMActionControllerStyleBlack;
     }
     
-    RMAction *selectAction = [RMAction<UIView *> actionWithTitle:@"Select" style:RMActionStyleDone andHandler:^(RMActionController<UIView *> *controller) {
+    RMAction *selectAction = [RMAction<UIView *> actionWithTitle:@"Select" highlightColor:UIColor.orangeColor style:RMActionStyleDone andHandler:^(RMActionController<UIView *> *controller) {
         NSLog(@"Action controller finished successfully");
     }];
     

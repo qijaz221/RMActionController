@@ -418,21 +418,35 @@
         [blockself addSubview:seperator toContainer:blockself.topContainer];
 
         if(!currentTopView) {
-            NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator};
+            NSLog(@"!currentTopView");
+            if (self.doneActions.count == 1) {
+                //Only one action, avoid adding  top separator.
+                NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator};
 
-            [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
-            [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
-            [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(seperatorHeight)]-(0)-[actionView]" options:0 metrics:metrics views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(0)]-(0)-[actionView]" options:0 metrics:metrics views:bindings]];
 
-            [blockself.topContainer addConstraint:[NSLayoutConstraint constraintWithItem:action.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:[blockself topContainerBottomItem] attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+                [blockself.topContainer addConstraint:[NSLayoutConstraint constraintWithItem:action.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:[blockself topContainerBottomItem] attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+            } else {
+                NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator};
+
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
+                [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(seperatorHeight)]-(0)-[actionView]" options:0 metrics:metrics views:bindings]];
+
+                [blockself.topContainer addConstraint:[NSLayoutConstraint constraintWithItem:action.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:[blockself topContainerBottomItem] attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+            }
         } else {
             if (index == self.doneActions.count - 1) {
+                NSLog(@"index == self.doneActions.count - 1");
                 //Don't want separator at the very top.
                 NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator, @"currentTopView": currentTopView};
                 [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
                 [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
                 [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(0)]-(0)-[actionView]-(0)-[currentTopView]" options:0 metrics:metrics views:bindings]];
             } else {
+                NSLog(@"ELSE index == self.doneActions.count - 1");
                 NSDictionary *bindings = @{@"actionView": action.view, @"seperator": seperator, @"currentTopView": currentTopView};
                 [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[actionView]-(0)-|" options:0 metrics:nil views:bindings]];
                 [blockself.topContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[seperator]-(0)-|" options:0 metrics:nil views:bindings]];
